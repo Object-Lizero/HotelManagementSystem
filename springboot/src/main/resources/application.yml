@@ -20,7 +20,7 @@ mybatis:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
     map-underscore-to-camel-case: true
-
+    # time_range(mysql表)  <-> timeRange (java实体类)
 # 分页
 pagehelper:
   helper-dialect: mysql
