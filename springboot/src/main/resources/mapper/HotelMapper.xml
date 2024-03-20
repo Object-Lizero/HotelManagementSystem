@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.HotelMapper">
+
+    <insert id="insert" parameterType="com.example.entity.Hotel" useGeneratedKeys="true">
+        insert into hotel
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <!--             前实体类属性  后数据库表字段-->
+            <if test="username != null">username,</if>
+            <if test="password != null">password,</if>
+            <if test="name != null">name,</if>
+            <if test="phone != null">phone,</if>
+            <if test="email != null">email,</if>
+            <if test="avatar != null">avatar,</if>
+            <if test="role != null">role,</if>
+            <if test="price != null">price,</if>
+            <if test="url != null">url,</if>
+            <if test="description != null">description,</if>
+            <if test="status != null">status,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <!--前实体类属性  后边#{}表示 取得实体类属性值-->
+            <if test="username != null">#{username},</if>
+            <if test="password != null">#{password},</if>
+            <if test="name != null">#{name},</if>
+            <if test="phone != null">#{phone},</if>
+            <if test="email != null">#{email},</if>
+            <if test="avatar != null">#{avatar},</if>
+            <if test="role != null">#{role},</if>
+            <if test="price != null">#{price},</if>
+            <if test="url != null">#{url},</if>
+            <if test="description != null">#{description},</if>
+            <if test="status != null">#{status},</if>
+        </trim>
+    </insert>
+
+
+</mapper>

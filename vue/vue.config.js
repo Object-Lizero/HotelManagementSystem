@@ -1,3 +1,4 @@
+// vue 全局配置文件
 const { defineConfig } = require('@vue/cli-service')
 module.exports = defineConfig({
   transpileDependencies: true,
@@ -7,7 +8,7 @@ module.exports = defineConfig({
   chainWebpack: config =>{
     config.plugin('html')
         .tap(args => {
-          args[0].title = "管理系统";
+          args[0].title = "可馨酒店预定网";
           return args;
         })
   }

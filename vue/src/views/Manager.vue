@@ -1,4 +1,5 @@
 <template>
+  <!--最外层的架子 -->
   <div class="manager-container">
     <!--  头部  -->
     <div class="manager-header">
@@ -50,6 +51,7 @@
               <i class="el-icon-menu"></i><span>用户管理</span>
             </template>
             <el-menu-item index="/admin">管理员信息</el-menu-item>
+            <el-menu-item index="/hotel">酒店信息</el-menu-item>
           </el-submenu>
         </el-menu>
       </div>

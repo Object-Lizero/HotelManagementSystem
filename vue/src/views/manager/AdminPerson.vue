@@ -57,6 +57,9 @@ export default {
 
           // 触发父级的数据更新
           this.$emit('update:user')
+
+          // 跳转主页
+          // this.$router.push('/')
         } else {
           this.$message.error(res.msg)
         }
