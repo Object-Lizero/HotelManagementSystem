@@ -4,6 +4,7 @@ import cn.hutool.core.util.ObjectUtil;
 import com.example.common.Constants;
 import com.example.common.enums.ResultCodeEnum;
 import com.example.common.enums.RoleEnum;
+import com.example.common.enums.StatusEnum;
 import com.example.entity.Account;
 import com.example.entity.Admin;
 import com.example.entity.Hotel;
@@ -30,6 +31,23 @@ public class HotelService {
 
 
     public void add(Hotel hotel) {
+        //1. 做一下重复性校验
+        Hotel hotelUser = hotelMapper.selectByUsername(hotel.getUsername());
+//        List<Hotel> hotels = hotelMapper.selectAll(hotel);
+        if(ObjectUtil.isNotNull(hotelUser)){
+            throw new CustomException(ResultCodeEnum.USER_EXIST_ERROR);
+        }
+        if(ObjectUtil.isEmpty(hotel.getPassword())){
+            hotel.setPassword("123456");
+        }
+        if(ObjectUtil.isEmpty(hotel.getRole())){
+            hotel.setRole(RoleEnum.HOTEL.name());
+        }
+        if(ObjectUtil.isEmpty(hotel.getAvatar())){
+            hotel.setAvatar("http://localhost:9090/files/1697438073596-avatar.png");
+        }
+        hotel.setStatus(StatusEnum.CHECKING.status);
+
         hotelMapper.insert(hotel);
     }
 }

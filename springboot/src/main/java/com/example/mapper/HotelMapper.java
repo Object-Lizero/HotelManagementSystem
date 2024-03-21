@@ -1,6 +1,9 @@
 package com.example.mapper;
 
 import com.example.entity.Hotel;
+import org.apache.ibatis.annotations.Select;
+
+import java.util.List;
 
 /**
  * 操作Hotel相关数据接口
@@ -9,4 +12,8 @@ public interface HotelMapper {
 
 
     void insert(Hotel hotel);
+    @Select("select * from hotel where username =  #{username}")
+    Hotel selectByUsername(String username);
+
+    List<Hotel> selectAll(Hotel hotel);
 }
