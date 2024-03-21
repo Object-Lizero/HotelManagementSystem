@@ -50,4 +50,24 @@ public class HotelService {
 
         hotelMapper.insert(hotel);
     }
+
+    public PageInfo<Hotel> selectPage(Hotel hotel, Integer pageNum, Integer pageSize) {
+        PageHelper.startPage(pageNum,pageSize);
+        List<Hotel> hotels = hotelMapper.selectAll(hotel);
+        return PageInfo.of(hotels);
+    }
+
+    public void update(Hotel hotel) {
+        hotelMapper.updateById(hotel);
+    }
+
+    public void deleteById(Integer id) {
+        hotelMapper.deleteById(id);
+    }
+
+    public void deleteBatch(List<Integer> ids) {
+        for (Integer id : ids) {
+            hotelMapper.deleteById(id);
+        }
+    }
 }

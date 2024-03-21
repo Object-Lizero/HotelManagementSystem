@@ -28,8 +28,8 @@
         <el-table-column prop="price" label="价格"></el-table-column>
         <el-table-column prop="phone" label="电话"></el-table-column>
         <el-table-column prop="email" label="邮箱"></el-table-column>
-        <el-table-column prop="url" label="官网"></el-table-column>
-        <el-table-column prop="description" label="介绍"></el-table-column>
+        <el-table-column prop="url" show-overflow-tooltip="true" label="官网"></el-table-column>
+        <el-table-column prop="description" show-overflow-tooltip="true" label="介绍"></el-table-column>
         <el-table-column prop="role" label="角色"></el-table-column>
         <el-table-column prop="status" label="状态"></el-table-column>
         <el-table-column label="操作" align="center" width="180">
@@ -91,7 +91,7 @@
 
 <script>
 export default {
-  name: "Admin",
+  name: "Hotel",
   data() {
     return {
       tableData: [],  // 所有的数据
@@ -143,7 +143,7 @@ export default {
     },
     del(id) {   // 单个删除
       this.$confirm('您确定删除吗？', '确认删除', {type: "warning"}).then(response => {
-        this.$request.delete('/admin/delete/' + id).then(res => {
+        this.$request.delete('/hotel/delete/' + id).then(res => {
           if (res.code === '200') {   // 表示操作成功
             this.$message.success('操作成功')
             this.load(1)
@@ -163,9 +163,9 @@ export default {
         return
       }
       this.$confirm('您确定批量删除这些数据吗？', '确认删除', {type: "warning"}).then(response => {
-        this.$request.delete('/admin/delete/batch', {data: this.ids}).then(res => {
+        this.$request.delete('/hotel/delete/batch', {data: this.ids}).then(res => {
           if (res.code === '200') {   // 表示操作成功
-            this.$message.success('操作成功')
+            this.$message.success('批量删除成功')
             this.load(1)
           } else {
             this.$message.error(res.msg)  // 弹出错误的信息
@@ -175,17 +175,22 @@ export default {
       })
     },
     load(pageNum) {  // 分页查询
-      // if (pageNum) this.pageNum = pageNum
-      // this.$request.get('/admin/selectPage', {
-      //   params: {
-      //     pageNum: this.pageNum,
-      //     pageSize: this.pageSize,
-      //     username: this.username,
-      //   }
-      // }).then(res => {
-      //   this.tableData = res.data?.list
-      //   this.total = res.data?.total
-      // })
+      if (pageNum) this.pageNum = pageNum
+      this.$request.get('/hotel/selectPage', {
+        params: {
+          pageNum: this.pageNum,
+          pageSize: this.pageSize,
+          username: this.username,
+        }
+      }).then(res => {
+        if(res.code === '200'){
+          this.tableData = res.data?.list
+          this.total = res.data?.total
+        }else{
+          this.$message.error(res.msg)
+        }
+
+      })
     },
     reset() {
       this.username = null

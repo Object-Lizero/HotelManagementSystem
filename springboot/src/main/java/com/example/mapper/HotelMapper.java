@@ -1,6 +1,7 @@
 package com.example.mapper;
 
 import com.example.entity.Hotel;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
@@ -16,4 +17,9 @@ public interface HotelMapper {
     Hotel selectByUsername(String username);
 
     List<Hotel> selectAll(Hotel hotel);
+
+    void updateById(Hotel hotel);
+
+    @Delete("delete from hotel where  id = #{id}")
+    void deleteById(Integer id);
 }
