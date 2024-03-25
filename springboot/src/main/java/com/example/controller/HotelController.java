@@ -46,7 +46,7 @@ public class HotelController {
      */
     @PutMapping("/update")
     public Result update(@RequestBody Hotel hotel){
-        hotelService.update(hotel);
+        hotelService.updateById(hotel);
         return Result.success(ResultCodeEnum.SUCCESS);
     }
 

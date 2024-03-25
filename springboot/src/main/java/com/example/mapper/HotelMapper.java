@@ -1,5 +1,6 @@
 package com.example.mapper;
 
+import com.example.entity.Account;
 import com.example.entity.Hotel;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Select;
@@ -22,4 +23,6 @@ public interface HotelMapper {
 
     @Delete("delete from hotel where  id = #{id}")
     void deleteById(Integer id);
+    @Select("select * from hotel where id =  #{id}")
+    Hotel selectById(Integer id);
 }

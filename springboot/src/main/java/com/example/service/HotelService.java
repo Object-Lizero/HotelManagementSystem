@@ -57,7 +57,7 @@ public class HotelService {
         return PageInfo.of(hotels);
     }
 
-    public void update(Hotel hotel) {
+    public void updateById(Hotel hotel) {
         hotelMapper.updateById(hotel);
     }
 
@@ -69,5 +69,33 @@ public class HotelService {
         for (Integer id : ids) {
             hotelMapper.deleteById(id);
         }
+    }
+
+    public Account login(Account account) {
+        Account hotel = hotelMapper.selectByUsername(account.getUsername());
+        //  查数据库是否有这个用户
+        if (ObjectUtil.isNull(hotel)) {
+            throw new CustomException(ResultCodeEnum.USER_NOT_EXIST_ERROR);
+        }
+        //  比对密码
+        if (!account.getPassword().equals(hotel.getPassword())) {
+            throw new CustomException(ResultCodeEnum.USER_ACCOUNT_ERROR);
+        }
+        // 生成token
+        String tokenData = hotel.getId() + "-" + RoleEnum.HOTEL.name();
+        String token = TokenUtils.createToken(tokenData, hotel.getPassword());
+        hotel.setToken(token);
+        return hotel;
+    }
+
+    public void register(Account account) {
+        Hotel hotel = new Hotel();
+        BeanUtils.copyProperties(account, hotel);
+        add(hotel);
+    }
+
+    public Account selectById(Integer id) {
+        Account account = hotelMapper.selectById(id);
+        return account;
     }
 }
