@@ -5,7 +5,7 @@
     <div class="front-header">
       <div class="front-header-left">
         <img src="@/assets/imgs/logo.png" alt="">
-        <div class="title">项目前台</div>
+        <div class="title">可馨酒店预定网</div>
       </div>
       <div class="front-header-center">
         <div class="front-header-nav">
