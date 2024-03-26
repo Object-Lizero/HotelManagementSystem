@@ -31,6 +31,15 @@ public class HotelController {
     }
 
     /**
+     * 查询所有
+     */
+    @GetMapping("/selectAll")
+    public Result selectAll() {
+        List<Hotel> hotels = hotelService.selectAll();
+        return Result.success(hotels);
+    }
+
+    /**
      * 分页查询
      */
     @GetMapping("/selectPage")

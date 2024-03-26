@@ -27,44 +27,22 @@
     </div>
   </div>
 
-  <div style="margin: 20px auto;width: 60%;text-align: left">
+<!--酒店信息展示-->
+  <div style="margin: 50px auto;width: 60%;text-align: left">
     <div style="text-align: center;font-size: 25px;font-weight: bold">
       平台优质酒店
     </div>
     <div style="margin-top: 30px;">
       <el-row gutter="20">
-        <el-col span="6">
-          <img src="@/assets/imgs/bg.jpg" style="width: 100%;height: 175px;border-radius: 10px;" alt="">
-          <div style="font-size: 16px;font-weight: bold;margin-top: 10px;color: #455873FF;">汉庭酒店</div>
+        <el-col :span="6" v-for="item in hotelData">
+          <img :src="item.avatar" style="width: 100%;height: 175px;border-radius: 10px;" alt="">
+          <div style="font-size: 16px;font-weight: bold;margin-top: 10px;color: #455873FF;">{{ item.name }}</div>
           <div style="margin-top: 10px;">
-            <span style="font-weight: bold;font-size: 16px;color: red">￥188</span> 起
+            <span style="font-weight: bold;font-size: 16px;color: red">￥{{ item.price }}</span> 起
             <span style="font-weight: bold;font-size: 14px;color: #455873FF;margin-left: 20px" ><i class="el-icon-chat-line-square"></i>  1688点评</span>
           </div>
         </el-col>
-        <el-col span="6">
-          <img src="@/assets/imgs/bg.jpg" style="width: 100%;height: 175px;border-radius: 10px;" alt="">
-          <div style="font-size: 16px;font-weight: bold;margin-top: 10px;color: #455873FF;">维也纳酒店</div>
-          <div style="margin-top: 10px;">
-            <span style="font-weight: bold;font-size: 16px;color: red">￥188</span> 起
-            <span style="font-weight: bold;font-size: 14px;color: #455873FF;margin-left: 20px" ><i class="el-icon-chat-line-square"></i>  1688点评</span>
-          </div>
-        </el-col>
-        <el-col span="6">
-          <img src="@/assets/imgs/bg.jpg" style="width: 100%;height: 175px;border-radius: 10px;" alt="">
-          <div style="font-size: 16px;font-weight: bold;margin-top: 10px;color: #455873FF;">全季酒店</div>
-          <div style="margin-top: 10px;">
-            <span style="font-weight: bold;font-size: 16px;color: red">￥188</span> 起
-            <span style="font-weight: bold;font-size: 14px;color: #455873FF;margin-left: 20px" ><i class="el-icon-chat-line-square"></i>  1688点评</span>
-          </div>
-        </el-col>
-        <el-col span="6">
-          <img src="@/assets/imgs/bg.jpg" style="width: 100%;height: 175px;border-radius: 10px;" alt="">
-          <div style="font-size: 16px;font-weight: bold;margin-top: 10px;color: #455873FF;">如家酒店</div>
-          <div style="margin-top: 10px;">
-            <span style="font-weight: bold;font-size: 16px;color: red">￥188</span> 起
-            <span style="font-weight: bold;font-size: 14px;color: #455873FF;margin-left: 20px" ><i class="el-icon-chat-line-square"></i>  1688点评</span>
-          </div>
-        </el-col>
+
       </el-row>
     </div>
   </div>
@@ -77,15 +55,25 @@ export default {
 
   data() {
     return {
-
+      hotelData:[],
     }
   },
   mounted() {
-
+    this.loadHotels();
   },
   // methods：本页面所有的点击事件或者其他函数定义区
   methods: {
-
+    loadHotels(){
+      //调用后台查询所有酒店信息接口
+      this.$request.get('/hotel/selectAll').then(res=>{
+        if(res.code === '200'){
+          this.hotelData = res.data;
+        }
+        else {
+          this.$message.error(res.msg);
+        }
+      })
+    }
   }
 }
 </script>

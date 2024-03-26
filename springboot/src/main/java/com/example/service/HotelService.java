@@ -111,4 +111,8 @@ public class HotelService {
         dbHotel.setPassword(account.getNewPassword());
         hotelMapper.updateById(dbHotel);
     }
+
+    public List<Hotel> selectAll() {
+        return hotelMapper.selectAll(new Hotel());
+    }
 }
