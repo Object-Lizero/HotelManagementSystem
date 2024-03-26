@@ -38,6 +38,8 @@
 </template>
 
 <script>
+import router from "@/router";
+
 export default {
   name: "Login",
   data() {
@@ -64,8 +66,13 @@ export default {
           this.$request.post('/login', this.form).then(res => {
             if (res.code === '200') {
               localStorage.setItem("xm-user", JSON.stringify(res.data))  // 存储用户数据
-              this.$router.push('/')  // 跳转主页
               this.$message.success('登录成功')
+              //this.$router.push('/')   //有时候路由跳转失败
+              if(res.data.role === "USER"){
+                location.href = '/front/home'
+              }else{
+                location.href = '/'
+              }
             } else {
               this.$message.error(res.msg)
             }

@@ -98,4 +98,17 @@ public class HotelService {
         Account account = hotelMapper.selectById(id);
         return account;
     }
+
+    //修改密码
+    public void updatePassword(Account account) {
+        Hotel dbHotel = hotelMapper.selectByUsername(account.getUsername());
+        if (ObjectUtil.isNull(dbHotel)) {
+            throw new CustomException(ResultCodeEnum.USER_NOT_EXIST_ERROR);
+        }
+        if (!account.getPassword().equals(dbHotel.getPassword())) {
+            throw new CustomException(ResultCodeEnum.PARAM_PASSWORD_ERROR);
+        }
+        dbHotel.setPassword(account.getNewPassword());
+        hotelMapper.updateById(dbHotel);
+    }
 }

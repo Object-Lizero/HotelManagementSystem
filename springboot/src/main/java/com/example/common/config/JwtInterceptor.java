@@ -12,6 +12,7 @@ import com.example.entity.Account;
 import com.example.exception.CustomException;
 import com.example.service.AdminService;
 import com.example.service.HotelService;
+import com.example.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -34,6 +35,8 @@ public class JwtInterceptor implements HandlerInterceptor {
 
     @Resource
     private HotelService hotelService;
+    @Resource
+    private UserService userService;
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         // 1. 从http请求的header中获取token
@@ -59,6 +62,10 @@ public class JwtInterceptor implements HandlerInterceptor {
             if(RoleEnum.HOTEL.name().equals(role)){
                 account = hotelService.selectById(Integer.valueOf(userId));
             }
+            if(RoleEnum.USER.name().equals(role)){
+                account = userService.selectById(Integer.valueOf(userId));
+            }
+
         } catch (Exception e) {
             throw new CustomException(ResultCodeEnum.TOKEN_CHECK_ERROR);
         }

@@ -16,11 +16,11 @@
             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
           </el-upload>
         </div>
-        <el-form-item label="用户名" prop="username">
-          <el-input v-model="user.username" placeholder="用户名" disabled></el-input>
+        <el-form-item label="用户账号" prop="username">
+          <el-input v-model="user.username" placeholder="用户账号" disabled></el-input>
         </el-form-item>
-        <el-form-item label="姓名" prop="name">
-          <el-input v-model="user.name" placeholder="姓名"></el-input>
+        <el-form-item label="用户昵称" prop="name">
+          <el-input v-model="user.name" placeholder="用户昵称"></el-input>
         </el-form-item>
         <el-form-item label="电话" prop="phone">
           <el-input v-model="user.phone" placeholder="电话"></el-input>
@@ -88,7 +88,7 @@ export default {
   methods: {
     update() {
       // 保存当前的用户信息到数据库
-      this.$request.put('/admin/update', this.user).then(res => {
+      this.$request.put('/user/update', this.user).then(res => {
         if (res.code === '200') {
           // 成功更新
           this.$message.success('保存成功')
@@ -116,7 +116,7 @@ export default {
           this.$request.put('/updatePassword', this.user).then(res => {
             if (res.code === '200') {
               // 成功更新
-              this.$message.success('修改密码成功')
+              this.$message.success('修改密码成功，请重新登录')
               this.$router.push('/login')
             } else {
               this.$message.error(res.msg)

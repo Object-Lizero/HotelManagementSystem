@@ -7,8 +7,10 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.example.common.Constants;
 import com.example.common.enums.RoleEnum;
 import com.example.entity.Account;
+import com.example.entity.User;
 import com.example.service.AdminService;
 import com.example.service.HotelService;
+import com.example.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -30,17 +32,21 @@ public class TokenUtils {
 
     private static AdminService staticAdminService;
     private static HotelService staticHotelService;
+    private static UserService staticUserService;
 
     @Resource
     AdminService adminService;
     @Resource
     HotelService hotelService;
+    @Resource
+    UserService userService ;
 
     @PostConstruct
-    public void setUserService() {
+    public void setService() {
 
         staticAdminService = adminService;
         staticHotelService = hotelService;
+        staticUserService = userService;
     }
 
     /**
@@ -68,6 +74,9 @@ public class TokenUtils {
                 }
                 if(RoleEnum.HOTEL.name().equals(role)){
                     return staticHotelService.selectById(Integer.valueOf(userId));
+                }
+                if(RoleEnum.USER.name().equals(role)){
+                    return staticUserService.selectById(Integer.valueOf(userId));
                 }
             }
         } catch (Exception e) {
