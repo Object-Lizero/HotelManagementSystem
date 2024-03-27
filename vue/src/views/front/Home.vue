@@ -35,7 +35,7 @@
     <div style="margin-top: 30px;">
       <el-row gutter="20">
         <el-col :span="6" v-for="item in hotelData">
-          <img :src="item.avatar" style="width: 100%;height: 175px;border-radius: 10px;" alt="">
+          <img :src="item.avatar" style="width: 100%;height: 175px;border-radius: 10px;cursor: pointer" alt="" @click="navToDetail(item.id)">
           <div style="font-size: 16px;font-weight: bold;margin-top: 10px;color: #455873FF;">{{ item.name }}</div>
           <div style="margin-top: 10px;">
             <span style="font-weight: bold;font-size: 16px;color: red">￥{{ item.price }}</span> 起
@@ -54,8 +54,9 @@
 export default {
 
   data() {
-    return {
+    return{
       hotelData:[],
+
     }
   },
   mounted() {
@@ -73,6 +74,9 @@ export default {
           this.$message.error(res.msg);
         }
       })
+    },
+    navToDetail(id) {
+      location.href = '/front/hotel?id=' + id
     }
   }
 }

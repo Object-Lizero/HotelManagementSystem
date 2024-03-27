@@ -68,6 +68,15 @@ public class TypeController {
     /**
      * 根据ID查询
      */
+    @GetMapping("/selectByHotelId")
+    public Result selectByHotelId(@RequestParam Integer id) {
+        List<Type> list = typeService.selectByHotelId(id);
+        return Result.success(list);
+    }
+
+    /**
+     * 根据ID查询
+     */
     @GetMapping("/selectById/{id}")
     public Result selectById(@PathVariable Integer id) {
         Type type = typeService.selectById(id);

@@ -94,9 +94,9 @@ public class HotelService {
         add(hotel);
     }
 
-    public Account selectById(Integer id) {
-        Account account = hotelMapper.selectById(id);
-        return account;
+    public Hotel selectById(Integer id) {
+        Hotel hotel = hotelMapper.selectById(id);
+        return hotel;
     }
 
     //修改密码

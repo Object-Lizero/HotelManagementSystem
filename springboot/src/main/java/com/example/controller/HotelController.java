@@ -2,6 +2,7 @@ package com.example.controller;
 
 import com.example.common.Result;
 import com.example.common.enums.ResultCodeEnum;
+import com.example.entity.Account;
 import com.example.entity.Admin;
 import com.example.entity.Hotel;
 import com.example.service.HotelService;
@@ -77,4 +78,10 @@ public class HotelController {
         return Result.success(ResultCodeEnum.SUCCESS);
     }
 
+
+    @GetMapping("/selectById")
+    public Result selectById(@RequestParam Integer id){
+        Hotel hotel = hotelService.selectById(id);
+        return Result.success(hotel);
+    }
 }
