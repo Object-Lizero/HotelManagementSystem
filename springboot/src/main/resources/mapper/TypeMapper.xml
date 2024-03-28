@@ -73,7 +73,7 @@
                 num = #{num},
             </if>
             <if test="hotelId != null">
-                hotelId = #{hotelId},
+                hotel_id = #{hotelId},
             </if>
             <if test="img != null">
                 img = #{img},
