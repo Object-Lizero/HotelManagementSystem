@@ -18,7 +18,7 @@
     <div style="width: 70%;margin: 0 auto;">
         <el-row gutter="20">
           <el-col :span="6" v-for="item in TypeData">
-            <img :src="item.img" style="width: 100%;height: 200px;border-radius: 10px; cursor: pointer" >
+            <img :src="item.img" style="width: 100%;height: 200px;border-radius: 10px; cursor: pointer" @click="ToDetail(item.id)" >
             <div style="font-size: 16px;margin-top: 10px;color: #455873FF;">
               <span style="font-weight: bold">{{ item.name }}</span>
               <span style="font-weight: bold;font-size: 16px;color: red">￥{{ item.price }}</span> 起
@@ -59,6 +59,9 @@ export default {
             }
           }
       )
+    },
+    ToDetail(id){
+      location.href= '/front/detail?id='+id
     },
     loadTypes(){
       this.$request.get('/type/selectByHotelId?id='+this.hotelId).then(res=> {

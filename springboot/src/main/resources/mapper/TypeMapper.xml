@@ -24,10 +24,9 @@
     </select>
 
     <select id="selectById" resultType="com.example.entity.Type">
-        select
-        <include refid="Base_Column_List" />
-        from type
-        where id = #{id}
+        select type.* ,hotel.name as hotelName from type
+        left join hotel on type.hotel_id = hotel.id
+        where type.id = #{id}
     </select>
 
     <delete id="deleteById">
