@@ -77,6 +77,16 @@ public class OrdersController {
     }
 
     /**
+     * 根据userID查询
+     */
+    @GetMapping("/selectByUserId")
+    public Result selectByUserId(@RequestParam Integer id) {
+        List<Orders> orders = ordersService.selectByUserId(id);
+        return Result.success(orders);
+    }
+
+
+    /**
      * 查询所有
      */
     @GetMapping("/selectAll")

@@ -36,6 +36,18 @@ public class Orders implements Serializable {
     private String hotelName;
     //用户姓名
     private String userName;
+    //房间图片
+    private String typeImg;
+
+    public String getTypeImg() {
+        return typeImg;
+    }
+
+    public void setTypeImg(String typeImg) {
+        this.typeImg = typeImg;
+    }
+
+
 
     public Integer getId() {
         return id;

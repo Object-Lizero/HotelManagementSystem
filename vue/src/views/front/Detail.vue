@@ -237,6 +237,7 @@ export default {
       this.$request.post('/orders/add', data).then(res => {
         if (res.code === '200') {
           this.$message.success("预定成功")
+          this.fromVisible = false
           // TODO  试着添加支付功能  跳转支付界面
         } else if (res.code === '5008'){
           this.$message.warning(res.msg)

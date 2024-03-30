@@ -134,4 +134,9 @@ public class OrdersService {
         return PageInfo.of(list);
     }
 
+    public List<Orders> selectByUserId(Integer id) {
+        Orders orders = new Orders();
+        orders.setUserId(id);
+        return ordersMapper.selectAll(orders);
+    }
 }

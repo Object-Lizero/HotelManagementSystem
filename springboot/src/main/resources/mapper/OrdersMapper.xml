@@ -9,24 +9,25 @@
     </sql>
 
     <select id="selectAll" resultType="com.example.entity.Orders">
-        select orders.*, type.name as typeName,hotel.name as hotelName
+        select orders.*, type.name as typeName,type.img as typeImg,hotel.name as hotelName,user.name as userName
         from orders
         left join type on orders.type_id = type.id
         left join hotel on orders.hotel_id = hotel.id
+        left join user on orders.user_id = user.id
         <where>
-            <if test="id != null"> and id= #{id}</if>
-            <if test="orderId != null"> and orders.name like concat('%', #{orderId}, '%')</if>
+            <if test="id != null"> and orders.id= #{id}</if>
+            <if test="orderId != null"> and orders.order_id = #{orderId}</if>
             <if test="status != null"> and orders.status= #{status}</if>
             <if test="typeId != null"> and type_id= #{typeId}</if>
-            <if test="hotelId != null"> and hotel_id= #{hotelId}</if>
-            <if test="userId != null"> and hotel_id= #{userId}</if>
+            <if test="hotelId != null"> and orders.hotel_id= #{hotelId}</if>
+            <if test="userId != null"> and user_id= #{userId}</if>
             <if test="time != null"> and time= #{time}</if>
             <if test="inTime != null"> and in_time= #{inTime}</if>
             <if test="outTime != null"> and out_time= #{outTime}</if>
             <if test="days != null"> and days= #{days}</if>
-            <if test="price != null"> and price= #{price}</if>
+            <if test="price != null"> and orders.price= #{price}</if>
         </where>
-        order by id desc
+        order by orders.id desc
     </select>
 
     <select id="selectById" resultType="com.example.entity.Orders">
