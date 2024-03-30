@@ -36,6 +36,7 @@ const routes = [
     children: [
       { path: 'home', name: 'Home', meta: { name: '系统首页' }, component: () => import('../views/front/Home') },
       { path: 'person', name: 'Person', meta: { name: '个人信息' }, component: () => import('../views/front/Person') },
+      { path: 'collect', name: 'Collect', meta: { name: '个人信息' }, component: () => import('../views/front/Collect') },
       { path: 'hotel', name: 'Hotel', meta: { name: '酒店详情页面' }, component: () => import('../views/front/Hotel') },
       { path: 'detail', name: 'Detail', meta: { name: '房间详情' }, component: () => import('../views/front/Detail') },
     ]

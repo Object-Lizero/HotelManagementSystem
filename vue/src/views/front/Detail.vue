@@ -126,7 +126,7 @@
 
         <div style="font-size: 16px;margin-top: 10px; margin-left: 25px;color: red">价格：￥{{typeData.price}}/晚</div>
         <div style="margin-top: 20px; margin-left: 25px;">
-          <el-button type="warning">加入收藏</el-button>
+          <el-button type="warning" @click="addCollect()">加入收藏</el-button>
           <el-button type="success">立即预定</el-button>
         </div>
       </div>
@@ -145,6 +145,8 @@ export default {
     return {
       typeData:{},
       typeId:typeId,
+      user: JSON.parse(localStorage.getItem('xm-user') || '{}'),
+
     }
   },
   mounted() {
@@ -157,6 +159,20 @@ export default {
       this.$request.get('/type/selectById?id='+this.typeId).then(res=>{
         if(res.code === '200'){
           this.typeData = res.data;
+        }else{
+          this.$message.error(res.msg)
+        }
+      })
+    },
+    addCollect(){
+      //用于接口传参的对象
+      let data ={
+        userId: this.user.id,
+        typeId: this.typeId
+      }
+      this.$request.post('/collect/add',data).then(res=>{
+        if(res.code === '200'){
+          this.$message.success("收藏成功")
         }else{
           this.$message.error(res.msg)
         }
