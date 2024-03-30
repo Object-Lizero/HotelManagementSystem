@@ -4,7 +4,7 @@
     <div style="width: 80%;margin:25px auto;">
         <el-row gutter="20">
           <el-col :span="6" v-for="item in typeData" style="margin: 15px 0">
-            <img :src="item.img" style="width: 100%;height: 200px;border-radius: 10px; cursor: pointer" @click="ToDetail(item.id)" >
+            <img :src="item.img" style="width: 100%;height: 200px;border-radius: 10px; cursor: pointer" @click="ToDetail(id)" >
             <div style="font-size: 16px;margin-top: 10px;color: #455873FF;">
               <span style="font-weight: bold">{{ item.name }}</span>
               <span style="font-weight: bold;font-size: 16px;color: red">￥{{ item.price }}</span> 起
@@ -43,7 +43,8 @@ export default {
       })
     },
     ToDetail(id){
-      location.href= '/front/detail?id='+id
+
+      location.href= '/front/detail?id='+id;
     },
     concelCollect(typeId){
       this.$request.delete('/collect/deleteByUserIdAndTypeId?userId='+this.user.id+"&typeId="+typeId).then(res=>{

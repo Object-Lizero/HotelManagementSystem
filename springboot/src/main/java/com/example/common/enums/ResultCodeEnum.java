@@ -15,6 +15,8 @@ public enum ResultCodeEnum {
     USER_NOT_EXIST_ERROR("5004", "用户不存在"),
     PARAM_PASSWORD_ERROR("5005", "原密码输入错误"),
     COLLECTED_ALEADY_ERROR("5006", "您已经收藏过该房间"),
+    TIME_CHECK_ERROR("5007", "您选择的日期不合理"),
+    ROOM_CHECK_EMPTY("5008", "该类型房型目前没有空余房间，请选择其他房间"),
     ;
 
     public String code;
