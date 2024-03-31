@@ -1,7 +1,7 @@
 <template>
   <div class="main-content">
-    <div class="table" style="margin: 20px auto;width: 88%;">
-      <el-table :data="ordersData" stripe  @selection-change="handleSelectionChange">
+    <div class="table" style="margin: 20px auto;width: 92%;">
+      <el-table :data="tableData" stripe  @selection-change="handleSelectionChange">
         <el-table-column type="selection" width="55" align="center"></el-table-column>
         <el-table-column prop="id" label="序号" width="80" align="center" sortable></el-table-column>
         <el-table-column label="图片">
@@ -55,7 +55,7 @@ export default {
   data() {
     return {
       user: JSON.parse(localStorage.getItem('xm-user') || '{}'),
-      ordersData:{},
+      tableData:{},
       pageNum:1,
       pageSize:5,
       total:0
@@ -78,7 +78,7 @@ export default {
         }
       }).then(res => {
         if(res.code === '200'){
-          this.ordersData = res.data?.list
+          this.tableData = res.data?.list
           this.total = res.data?.total
 
         }else{

@@ -12,7 +12,7 @@
     </div>
 
     <div class="table">
-      <el-table :data="ordersData" stripe  @selection-change="handleSelectionChange">
+      <el-table :data="tableData" stripe  @selection-change="handleSelectionChange">
         <el-table-column type="selection" width="55" align="center"></el-table-column>
         <el-table-column prop="id" label="序号" width="80" align="center" sortable></el-table-column>
         <el-table-column label="图片">
@@ -65,7 +65,7 @@ export default {
   name: "Room",
   data() {
     return {
-      ordersData: [],  // 所有的数据
+      tableData: [],  // 所有的数据
       pageNum: 1,   // 当前的页码
       pageSize: 10,  // 每页显示的个数
       total: 0,
@@ -159,7 +159,7 @@ export default {
         }
       }).then(res => {
         if(res.code === '200'){
-          this.ordersData = res.data?.list
+          this.tableData = res.data?.list
           this.total = res.data?.total
 
         }else{
