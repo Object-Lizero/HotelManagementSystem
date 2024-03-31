@@ -14,7 +14,7 @@
     <div class="table">
       <el-table :data="tableData" stripe  @selection-change="handleSelectionChange">
         <el-table-column type="selection" width="55" align="center"></el-table-column>
-        <el-table-column prop="id" label="序号" width="80" align="center" sortable></el-table-column>
+        <el-table-column prop="id" label="序号" width="60" align="center" sortable></el-table-column>
         <el-table-column label="图片">
           <template v-slot="scope">
             <div style="display: flex; align-items: center">
@@ -23,15 +23,15 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column prop="orderId" label="订单编号" ></el-table-column>
+        <el-table-column prop="orderId"  width="120" label="订单编号" ></el-table-column>
 <!--     文本多了 显示省略号 鼠标悬浮显示注释 设置： show-overflow-tooltip   -->
         <el-table-column prop="userName" label="预定人" show-overflow-tooltip></el-table-column>
         <el-table-column prop="hotelName" label="酒店"></el-table-column>
         <el-table-column prop="typeName" label="客房类型"></el-table-column>
-        <el-table-column prop="time" label="预定时间" ></el-table-column>
-        <el-table-column prop="price" label="价格"></el-table-column>
-        <el-table-column prop="inTime" label="入住时间"></el-table-column>
-        <el-table-column prop="outTime" label="离开时间"></el-table-column>
+        <el-table-column prop="time" width="90"  label="预定时间" ></el-table-column>
+        <el-table-column prop="price" width="50" label="价格"></el-table-column>
+        <el-table-column prop="inTime"  width="90"  label="入住时间"></el-table-column>
+        <el-table-column prop="outTime"  width="90"  label="离开时间"></el-table-column>
         <el-table-column prop="days" label="入住天数"></el-table-column>
         <el-table-column prop="status" label="订单状态"></el-table-column>
 

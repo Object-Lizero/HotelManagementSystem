@@ -63,6 +63,14 @@ public class RoomController {
         Room room = roomService.selectById(id);
         return Result.success(room);
     }
+    /**
+     * 根据typeID查询
+     */
+    @GetMapping("/selectByTypeId")
+    public Result selectByTypeId(@RequestParam String orderId) {
+        List<Room> list = roomService.selectByTypeId(orderId);
+        return Result.success(list);
+    }
 
     /**
      * 查询所有

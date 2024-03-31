@@ -1,6 +1,7 @@
 package com.example.mapper;
 
 import com.example.entity.Room;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
@@ -33,5 +34,8 @@ public interface RoomMapper {
       * 查询所有
     */
     List<Room> selectAll(Room notice);
+
+    @Select("select * from room where type_id = #{typeId} and status ='空闲'" )
+    List<Room> selectByTypeId(Integer typeId);
 
 }

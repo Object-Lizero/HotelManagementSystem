@@ -1,8 +1,8 @@
 package com.example.controller;
 
 import com.example.common.Result;
-import com.example.entity.Orders;
-import com.example.service.OrdersService;
+import com.example.entity.Checkin;
+import com.example.service.CheckinService;
 import com.github.pagehelper.PageInfo;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,24 +10,25 @@ import javax.annotation.Resource;
 import java.util.List;
 
 /**
- * 订单信息表前端操作接口
+ * 入住信息表前端操作接口
  **/
 @RestController
-@RequestMapping("/orders")
-public class OrdersController {
+@RequestMapping("/checkin")
+public class CheckinController {
 
     @Resource
-    private OrdersService ordersService;
+    private CheckinService checkinService;
 
     /**
      * 新增
      */
     @PostMapping("/add")
-    public Result add(@RequestBody Orders orders) {
+    public Result add(@RequestBody Checkin checkin) {
 
-        ordersService.add(orders);
+        checkinService.add(checkin);
         return Result.success();
     }
+
 
 
     /**
@@ -35,7 +36,7 @@ public class OrdersController {
      */
     @DeleteMapping("/delete/{id}")
     public Result deleteById(@PathVariable Integer id) {
-        ordersService.deleteById(id);
+        checkinService.deleteById(id);
         return Result.success();
     }
 
@@ -44,7 +45,7 @@ public class OrdersController {
      */
     @DeleteMapping("/delete/batch")
     public Result deleteBatch(@RequestBody List<Integer> ids) {
-        ordersService.deleteBatch(ids);
+        checkinService.deleteBatch(ids);
         return Result.success();
     }
 
@@ -52,8 +53,8 @@ public class OrdersController {
      * 修改
      */
     @PutMapping("/update")
-    public Result updateById(@RequestBody Orders orders) {
-        ordersService.updateById(orders);
+    public Result updateById(@RequestBody Checkin checkin) {
+        checkinService.updateById(checkin);
         return Result.success();
     }
 
@@ -62,8 +63,8 @@ public class OrdersController {
      */
     @GetMapping("/selectById/{id}")
     public Result selectById(@PathVariable Integer id) {
-        Orders orders = ordersService.selectById(id);
-        return Result.success(orders);
+        Checkin checkin = checkinService.selectById(id);
+        return Result.success(checkin);
     }
 
     /**
@@ -71,8 +72,8 @@ public class OrdersController {
      */
     @GetMapping("/selectByUserId")
     public Result selectByUserId(@RequestParam Integer id) {
-        List<Orders> orders = ordersService.selectByUserId(id);
-        return Result.success(orders);
+        List<Checkin> checkin = checkinService.selectByUserId(id);
+        return Result.success(checkin);
     }
 
 
@@ -80,17 +81,8 @@ public class OrdersController {
      * 查询所有
      */
     @GetMapping("/selectAll")
-    public Result selectAll(Orders orders) {
-        List<Orders> list = ordersService.selectAll(orders);
-        return Result.success(list);
-    }
-
-    /**
-     * 根据带入住状态查询订单
-     */
-    @GetMapping("/selectCheckin")
-    public Result selectCheckin(@RequestParam Integer id) {
-        List<Orders> list = ordersService.selectByCheckinAndHotelId(id);
+    public Result selectAll(Checkin checkin ) {
+        List<Checkin> list = checkinService.selectAll(checkin);
         return Result.success(list);
     }
 
@@ -98,10 +90,10 @@ public class OrdersController {
      * 分页查询
      */
     @GetMapping("/selectPage")
-    public Result selectPage(Orders orders,
+    public Result selectPage(Checkin checkin,
                              @RequestParam(defaultValue = "1") Integer pageNum,
                              @RequestParam(defaultValue = "10") Integer pageSize) {
-        PageInfo<Orders> page = ordersService.selectPage(orders, pageNum, pageSize);
+        PageInfo<Checkin> page = checkinService.selectPage(checkin, pageNum, pageSize);
         return Result.success(page);
     }
 

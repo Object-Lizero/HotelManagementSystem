@@ -3,9 +3,11 @@ package com.example.service;
 import cn.hutool.core.util.ObjectUtil;
 import com.example.common.enums.ResultCodeEnum;
 import com.example.common.enums.RoomEnum;
+import com.example.entity.Orders;
 import com.example.entity.Room;
 import com.example.entity.Type;
 import com.example.exception.CustomException;
+import com.example.mapper.OrdersMapper;
 import com.example.mapper.RoomMapper;
 import com.example.mapper.TypeMapper;
 import com.github.pagehelper.PageHelper;
@@ -27,6 +29,9 @@ public class RoomService {
 
     @Resource
     private TypeMapper typeMapper;
+
+    @Resource
+    private OrdersMapper ordersMapper;
     /**
      * 新增
      */
@@ -100,4 +105,10 @@ public class RoomService {
         return PageInfo.of(list);
     }
 
+    public List<Room> selectByTypeId(String orderId) {
+        //查询该订单选中的房型
+        Orders orders = ordersMapper.selectByOrderId(orderId);
+        //查询该房型剩余的空房间
+        return roomMapper.selectByTypeId(orders.getTypeId());
+    }
 }

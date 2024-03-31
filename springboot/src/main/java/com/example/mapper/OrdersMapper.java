@@ -35,4 +35,6 @@ public interface OrdersMapper {
     */
     List<Orders> selectAll(Orders orders);
 
+    @Select("select * from orders where order_id = #{orderId}")
+    Orders selectByOrderId(String orderId);
 }
