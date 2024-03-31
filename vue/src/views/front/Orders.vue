@@ -1,7 +1,9 @@
 <template>
   <div class="main-content">
     <div class="table" style="margin: 20px auto;width: 88%;">
-      <el-table :data="ordersData" stripe>
+      <el-table :data="ordersData" stripe  @selection-change="handleSelectionChange">
+        <el-table-column type="selection" width="55" align="center"></el-table-column>
+        <el-table-column prop="id" label="序号" width="80" align="center" sortable></el-table-column>
         <el-table-column label="图片">
           <template v-slot="scope">
             <div style="display: flex; align-items: center">
@@ -87,6 +89,9 @@ export default {
     //切换分页
     handleCurrentChange(pageNum) {
       this.loadOrders(pageNum)
+    },
+    handleSelectionChange(rows) {   // 当前选中的所有的行数据
+      this.ids = rows.map(v => v.id)   //  [1,2]
     },
 
   }

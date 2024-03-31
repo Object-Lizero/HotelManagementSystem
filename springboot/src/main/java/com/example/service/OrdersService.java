@@ -4,11 +4,14 @@ import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.ObjectUtil;
 import com.example.common.enums.OrdersEnum;
 import com.example.common.enums.ResultCodeEnum;
+import com.example.common.enums.RoleEnum;
+import com.example.entity.Account;
 import com.example.entity.Orders;
 import com.example.entity.Type;
 import com.example.exception.CustomException;
 import com.example.mapper.OrdersMapper;
 import com.example.mapper.TypeMapper;
+import com.example.utils.TokenUtils;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.slf4j.Logger;
@@ -129,6 +132,13 @@ public class OrdersService {
      * 分页查询
      */
     public PageInfo<Orders> selectPage(Orders orders, Integer pageNum, Integer pageSize) {
+        Account currentUser = TokenUtils.getCurrentUser();
+        if (RoleEnum.HOTEL.name().equals(currentUser.getRole())) {
+            orders.setHotelId(currentUser.getId());
+        }
+        if (RoleEnum.USER.name().equals(currentUser.getRole())) {
+            orders.setUserId(currentUser.getId());
+        }
         PageHelper.startPage(pageNum, pageSize);
         List<Orders> list = ordersMapper.selectAll(orders);
         return PageInfo.of(list);

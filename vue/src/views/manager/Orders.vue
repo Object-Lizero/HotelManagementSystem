@@ -12,7 +12,9 @@
     </div>
 
     <div class="table">
-      <el-table :data="ordersData" stripe>
+      <el-table :data="ordersData" stripe  @selection-change="handleSelectionChange">
+        <el-table-column type="selection" width="55" align="center"></el-table-column>
+        <el-table-column prop="id" label="序号" width="80" align="center" sortable></el-table-column>
         <el-table-column label="图片">
           <template v-slot="scope">
             <div style="display: flex; align-items: center">
@@ -35,7 +37,6 @@
 
         <el-table-column label="操作" width="180" align="center">
           <template v-slot="scope">
-            <el-button plain type="primary" @click="handleEdit(scope.row)" size="mini">编辑</el-button>
             <el-button plain type="danger" size="mini" @click=del(scope.row.id)>删除</el-button>
           </template>
         </el-table-column>
