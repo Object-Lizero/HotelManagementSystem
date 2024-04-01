@@ -24,7 +24,7 @@
         <el-table-column prop="outTime" label="离开时间" width="90"></el-table-column>
         <el-table-column label="操作" width="180" align="center">
           <template v-slot="scope">
-            <el-button plain type="primary" size="mini" @click=checkOut(scope.row.id) :disabled="scope.row.outTime">退房</el-button>
+            <el-button plain type="primary" size="mini" @click=checkOut(scope.row.id) :disabled="scope.row.outTime!=null">退房</el-button>
             <el-button plain type="danger" size="mini" @click=del(scope.row.id)>删除</el-button>
           </template>
         </el-table-column>
