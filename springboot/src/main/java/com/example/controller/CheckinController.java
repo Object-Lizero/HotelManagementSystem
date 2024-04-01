@@ -68,6 +68,14 @@ public class CheckinController {
     }
 
     /**
+     * 根据ID查询
+     */
+    @GetMapping("/out/{id}")
+    public Result checkout(@PathVariable Integer id) {
+        checkinService.checkout(id);
+        return Result.success();
+    }
+    /**
      * 根据userID查询
      */
     @GetMapping("/selectByUserId")

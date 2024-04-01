@@ -13,7 +13,7 @@ public interface RoomMapper {
     /**
       * 新增
     */
-    int insert(Room notice);
+    int insert(Room room);
 
     /**
       * 删除
@@ -23,7 +23,7 @@ public interface RoomMapper {
     /**
       * 修改
     */
-    int updateById(Room notice);
+    int updateById(Room room);
 
     /**
       * 根据ID查询
@@ -33,7 +33,7 @@ public interface RoomMapper {
     /**
       * 查询所有
     */
-    List<Room> selectAll(Room notice);
+    List<Room> selectAll(Room room);
 
     @Select("select * from room where type_id = #{typeId} and status ='空闲'" )
     List<Room> selectByTypeId(Integer typeId);

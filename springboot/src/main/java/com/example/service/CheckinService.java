@@ -1,5 +1,6 @@
 package com.example.service;
 
+import cn.hutool.core.date.DateUtil;
 import com.example.common.enums.OrdersEnum;
 import com.example.common.enums.RoleEnum;
 import com.example.common.enums.RoomEnum;
@@ -11,8 +12,6 @@ import com.example.mapper.TypeMapper;
 import com.example.utils.TokenUtils;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -40,6 +39,7 @@ public class CheckinService {
 
     @Resource
     private TypeMapper typeMapper;
+
     /**
      * 新增
      */
@@ -50,6 +50,7 @@ public class CheckinService {
         checkin.setUserId(orders.getUserId());
         checkin.setHotelId(orders.getHotelId());
         checkin.setTypeId(orders.getTypeId());
+        checkin.setInTime(DateUtil.now());
         checkinMapper.insert(checkin);
 
         // 修改关联的数据
@@ -60,12 +61,35 @@ public class CheckinService {
 
         //  2. 对应的客房分类剩余间数 要减1
         Type type = typeMapper.selectById(room.getTypeId());
-        type.setNum(type.getNum()-1);
+        type.setNum(type.getNum() - 1);
         typeMapper.updateById(type);
 
         //  3. 对应的订单状态变成已入住
         orders.setStatus(OrdersEnum.STATUS_IN.status);
         ordersMapper.updateById(orders);
+    }
+
+    //退房逻辑实现
+    public void checkout(Integer id) {
+        Checkin checkin = checkinMapper.selectById(id);
+        checkin.setOutTime(DateUtil.now());
+        checkinMapper.updateById(checkin);
+
+        // 1. 该客房状态还原为空闲
+        Room room = roomMapper.selectById(checkin.getRoomId());
+        room.setStatus(RoomEnum.STATUS_OK.status);
+        roomMapper.updateById(room);
+
+        // 2. 该房型对应的数量 +1
+        Type type = typeMapper.selectById(checkin.getTypeId());
+        type.setNum(type.getNum() + 1);
+        typeMapper.updateById(type);
+
+        //  3. 对应的订单状态变成 已退房
+        Orders orders = ordersMapper.selectByOrderId(checkin.getOrderId());
+        orders.setStatus(OrdersEnum.STATUS_OUT.status);
+        ordersMapper.updateById(orders);
+
     }
 
     private Long getDayNum(String inTime, String outTime) throws ParseException {
@@ -137,4 +161,6 @@ public class CheckinService {
         checkin.setUserId(id);
         return checkinMapper.selectAll(checkin);
     }
+
+
 }

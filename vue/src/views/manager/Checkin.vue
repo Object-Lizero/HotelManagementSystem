@@ -20,10 +20,11 @@
         <el-table-column prop="hotelName" label="酒店"></el-table-column>
         <el-table-column prop="typeName" label="客房类型"></el-table-column>
         <el-table-column prop="roomName" label="房间编号"></el-table-column>
-        <el-table-column prop="inTime" label="入住时间"></el-table-column>
-        <el-table-column prop="outTime" label="离开时间"></el-table-column>
+        <el-table-column prop="inTime" label="入住时间" width="90"></el-table-column>
+        <el-table-column prop="outTime" label="离开时间" width="90"></el-table-column>
         <el-table-column label="操作" width="180" align="center">
           <template v-slot="scope">
+            <el-button plain type="primary" size="mini" @click=checkOut(scope.row.id) :disabled="scope.row.outTime">退房</el-button>
             <el-button plain type="danger" size="mini" @click=del(scope.row.id)>删除</el-button>
           </template>
         </el-table-column>
@@ -54,9 +55,9 @@
           </el-select>
         </el-form-item>
 
-        <el-form-item prop="inTime" label="入住时间">
-          <el-date-picker v-model="form.inTime" type="date" placeholder="选择日期" value-format="yyyy-MM-dd" :picker-options="pickerOptions" style="width: 100%;"></el-date-picker>
-        </el-form-item>
+<!--        <el-form-item prop="inTime" label="入住时间">-->
+<!--          <el-date-picker v-model="form.inTime" type="date" placeholder="选择日期" value-format="yyyy-MM-dd" :picker-options="pickerOptions" style="width: 100%;"></el-date-picker>-->
+<!--        </el-form-item>-->
 
       </el-form>
 
@@ -95,19 +96,19 @@ export default {
       ordersData: [],
       ids: [],
       fromVisible:false,
-      pickerOptions: {
-        //时间选择日期禁用处理
-        disabledDate(time) {
-          // 获取当前日期
-          const currentDate = new Date();
-          // 获取今天的 00:00:00 的时间戳
-          const today = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate()).getTime();
-          // 获取要禁用的日期的时间戳（昨天及之前的日期）
-          const targetDay = new Date(time.getFullYear(), time.getMonth(), time.getDate()).getTime();
-          // 如果时间戳小于今天的时间戳，则禁用
-          return targetDay < today;
-        }
-      },
+      // pickerOptions: {
+      //   //时间选择日期禁用处理
+      //   disabledDate(time) {
+      //     // 获取当前日期
+      //     const currentDate = new Date();
+      //     // 获取今天的 00:00:00 的时间戳
+      //     const today = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate()).getTime();
+      //     // 获取要禁用的日期的时间戳（昨天及之前的日期）
+      //     const targetDay = new Date(time.getFullYear(), time.getMonth(), time.getDate()).getTime();
+      //     // 如果时间戳小于今天的时间戳，则禁用
+      //     return targetDay < today;
+      //   }
+      // },
 
 
 
@@ -209,7 +210,6 @@ export default {
         if(res.code === '200'){
           this.tableData = res.data?.list
           this.total = res.data?.total
-          console.log(this.tableData)
         }else{
           this.$message.error(res.msg)
         }
@@ -222,6 +222,18 @@ export default {
     handleCurrentChange(pageNum) {
       this.load(pageNum)
     },
+    checkOut(id){
+      this.$request.get('/checkin/out/'+id).then(res=>{
+        if(res.code === '200') {
+          this.$message.success('退房成功')
+          this.load(1);
+        }
+        else{
+          this.$message.error(res.msg)
+        }
+
+      })
+    }
   }
 }
 </script>
