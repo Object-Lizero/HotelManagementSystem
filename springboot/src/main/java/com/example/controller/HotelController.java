@@ -48,7 +48,7 @@ public class HotelController {
     @GetMapping("/selectByName")
     public Result selectByName(@RequestParam String name) {
         List<Hotel> hotels = null;
-        if (ObjectUtil.isNotEmpty(name) &&  "null".equals(hotels)) {
+        if (ObjectUtil.isNotEmpty(name) &&  "null".equals(name)) {
             hotels = hotelService.selectAll();
         } else {
             hotels = hotelService.selectByName(name);

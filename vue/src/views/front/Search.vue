@@ -47,7 +47,9 @@ export default {
         }
       })
     },
-
+    navToDetail(id) {
+      location.href = '/front/hotel?id=' + id
+    }
   }
 }
 </script>
