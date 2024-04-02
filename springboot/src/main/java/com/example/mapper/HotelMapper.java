@@ -25,4 +25,7 @@ public interface HotelMapper {
     void deleteById(Integer id);
     @Select("select * from hotel where id =  #{id}")
     Hotel selectById(Integer id);
+
+    @Select("select * from hotel where name like concat('%',#{name},'%')")
+    List<Hotel> selectByName(String name);
 }

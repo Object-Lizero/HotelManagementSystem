@@ -33,7 +33,7 @@
       平台优质酒店
     </div>
     <div style="margin-top: 30px;">
-      <el-row gutter="20">
+      <el-row :gutter="20">
         <el-col :span="6" v-for="item in hotelData">
           <img :src="item.avatar" style="width: 100%;height: 175px;border-radius: 10px;cursor: pointer" alt="" @click="navToDetail(item.id)">
           <div style="font-size: 16px;font-weight: bold;margin-top: 10px;color: #455873FF;">{{ item.name }}</div>

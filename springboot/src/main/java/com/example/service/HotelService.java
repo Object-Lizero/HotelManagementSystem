@@ -115,4 +115,8 @@ public class HotelService {
     public List<Hotel> selectAll() {
         return hotelMapper.selectAll(new Hotel());
     }
+
+    public List<Hotel> selectByName(String name) {
+        return hotelMapper.selectByName(name);
+    }
 }

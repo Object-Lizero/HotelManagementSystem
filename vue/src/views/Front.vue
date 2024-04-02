@@ -18,6 +18,12 @@
           </el-menu>
         </div>
       </div>
+<!--  搜索框    -->
+      <div style="width: 300px" >
+        <el-input  style="width: 70%" placeholder="请输入酒店名称" v-model="name" ></el-input>
+        <el-button style="margin-left: 5px" type="primary" @click="toSearch">搜索</el-button>
+      </div>
+
       <div class="front-header-right">
         <div v-if="!user.username">
           <el-button @click="$router.push('/login')">登录</el-button>
@@ -55,6 +61,7 @@ export default {
 
   data () {
     return {
+      name:null,
       top: '',
       notice: [],
       user: JSON.parse(localStorage.getItem("xm-user") || '{}'),
@@ -89,7 +96,12 @@ export default {
       localStorage.removeItem("xm-user");
       this.$router.push("/login");
     },
+    toSearch(){
+      location.href = '/front/search?name=' + this.name
+
+    }
   }
+
 
 }
 </script>
