@@ -33,8 +33,8 @@ public class OrdersController {
     /**
      * 删除
      */
-    @DeleteMapping("/delete/{id}")
-    public Result deleteById(@PathVariable Integer id) {
+    @DeleteMapping("/deleteById")
+    public Result deleteById(@RequestParam Integer id) {
         ordersService.deleteById(id);
         return Result.success();
     }

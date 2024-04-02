@@ -27,7 +27,8 @@
 
         <el-table-column label="操作" width="180" align="center">
           <template v-slot="scope">
-            <el-button plain type="danger" size="mini" @click=del(scope.row.id)>删除</el-button>
+            <el-button plain type="primary" size="mini" @click="comment(scope.row.typeId)" v-if="scope.row.status === '已退房'">评价</el-button>
+            <el-button plain type="danger" size="mini" @click="del(scope.row.id)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -44,6 +45,21 @@
         </el-pagination>
       </div>
     </div>
+    <!-- 评价弹窗-->
+    <div>
+      <el-dialog title="请输入评价" :visible.sync="fromVisible" width="45%" :close-on-click-modal="false" destroy-on-close>
+        <el-form label-width="100px" style="padding-right: 50px" >
+          <el-form-item prop="content" label="评价内容">
+            <el-input type="textarea" v-model="content"></el-input>
+          </el-form-item>
+        </el-form>
+
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="fromVisible = false">取 消</el-button>
+          <el-button type="primary" @click="save()">确 定</el-button>
+        </div>
+      </el-dialog>
+    </div>
   </div>
 </template>
 
@@ -57,7 +73,9 @@ export default {
       tableData:{},
       pageNum:1,
       pageSize:5,
-      total:0
+      total:0,
+      content:null,
+      fromVisible:false
     }
   },
   mounted() {
@@ -92,6 +110,24 @@ export default {
     handleSelectionChange(rows) {   // 当前选中的所有的行数据
       this.ids = rows.map(v => v.id)   //  [1,2]
     },
+    del(id){
+      this.$request.delete('/orders/deleteById?id='+id).then(res=>{
+        if(res.code === '200'){
+          this.$message.success("删除成功")
+          this.loadOrders(1)
+        }else{
+          this.$message.error(res.msg)
+        }
+      })
+    },
+    /*保存评价信息*/
+    save(){
+
+    },
+    //打开评价弹窗
+    comment(typeId){
+      this.fromVisible = true
+    }
 
   }
 }
