@@ -91,9 +91,8 @@ public class UserService {
         add(user);
     }
 
-    public Account selectById(Integer id) {
-        Account account = userMapper.selectById(id);
-        return account;
+    public User selectById(Integer id) {
+        return userMapper.selectById(id);
     }
 
     //修改密码

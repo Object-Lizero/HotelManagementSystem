@@ -95,8 +95,7 @@ public class HotelService {
     }
 
     public Hotel selectById(Integer id) {
-        Hotel hotel = hotelMapper.selectById(id);
-        return hotel;
+        return hotelMapper.selectById(id);
     }
 
     //修改密码
