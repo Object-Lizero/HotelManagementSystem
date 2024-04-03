@@ -140,44 +140,43 @@
     <!-- 评论区  -->
     <div style="padding: 20px 50px;margin-bottom: 1000px">
       <!--一条评论-->
-      <div style="margin: 15px 0">
+      <div style="margin: 15px 0" v-for="item in commentData">
         <el-row :gutter="20">
           <el-col :span="4">
             <div style="display: flex; align-items: center">
-              <img src="@/assets/imgs/bg.jpg" alt="" style="width: 50px;height: 50px;border-radius: 50%">
-              <div style="flex:1;margin-left: 10px;color: #5E5C5CFF">张三</div>
+              <img :src="item.avatar" alt="" style="width: 50px;height: 50px;border-radius: 50%">
+              <div style="flex:1;margin-left: 10px;color: #5E5C5CFF">{{item.userName}}</div>
             </div>
           </el-col>
-
           <el-col :span="20">
             <el-row :gutter="20">
               <el-col :span="19">
-                <div style="height: 50px;line-height: 50px">dfadsf sadfwe放到安抚阿斯蒂芬</div>
+                <div style="height: 50px;line-height: 50px">{{item.content}}</div>
               </el-col>
               <el-col :span="5">
-                <div style="height: 50px;line-height: 50px">2024-9-3 18:00:00</div>
+                <div style="height: 50px;line-height: 50px">{{item.time}}</div>
               </el-col>
             </el-row>
             <!--该评论的回复-->
-            <el-row :gutter="20" style="margin-top: 5px">
+            <el-row :gutter="20" style="margin-top: 5px" v-for="child in item.children">
               <el-col :span="5">
                 <div style="display: flex; align-items: center">
-                  <img src="@/assets/imgs/bg.jpg" alt="" style="width: 50px;height: 50px;border-radius: 50%">
-                  <div style="flex:1;margin-left: 10px;color: #5E5C5CFF">张三 <span style="font-weight: bold;">回复：</span> </div>
+                  <img :src="child.avatar" alt="" style="width: 50px;height: 50px;border-radius: 50%">
+                  <div style="flex:1;margin-left: 10px;color: #5E5C5CFF">{{child.userName}}<span style="font-weight: bold;"> 回复：</span> </div>
                 </div>
               </el-col>
               <el-col :span="14">
-                <div style="height: 50px;line-height: 50px">dfadsfsadfwe放到安抚阿斯蒂芬</div>
+                <div style="height: 50px;line-height: 50px">{{child.content}}</div>
               </el-col>
               <el-col :span="5">
-                <div style="height: 50px;line-height: 50px">2024-9-3 18:00:00</div>
+                <div style="height: 50px;line-height: 50px">{{child.time}}</div>
               </el-col>
             </el-row>
             <!--回复评论输入框-->
-            <el-row :gutter="20" style="margin-top: 5px">
+            <el-row :gutter="20" style="margin-top: 5px" >
               <el-col :span="20">
-                <el-input style="width: 70%"></el-input>
-                <el-button style="margin-left: 15px">回复</el-button>
+                <el-input style="width: 70%"v-model="item.reply"></el-input>
+                <el-button style="margin-left: 15px" @click="replyComment(item.id,item.reply)">回复</el-button>
 
               </el-col>
               <el-col :span="4">
@@ -292,12 +291,11 @@ export default {
     save() {
       let data = {
         userId: this.user.id,
-        typeId: this.typeData.id,
+        typeId: this.typeId,
         hotelId: this.typeData.hotelId,
         inTime: this.inTime,
         outTime: this.outTime,
       }
-
       this.$request.post('/orders/add', data).then(res => {
         if (res.code === '200') {
           this.$message.success("预定成功")
@@ -311,6 +309,31 @@ export default {
         }else {
           this.$message.error(res.msg)
           this.fromVisible = false
+        }
+      })
+    },
+    replyComment(parentId,replyContent){
+      if (!replyContent) {
+        this.$message.warning('请输入回复内容')
+        return
+      }
+      let data = {
+        content : replyContent,
+        typeId:this.typeId,
+        hotelId:this.typeData.hotelId,
+        userId:this.user.userId,
+        role:this.user.role,
+        parentId:parentId
+
+      }
+      this.$request.post('/comment/add',data).then(res=>{
+        if(res.code === '200'){
+          this.$message.success('回复成功')
+          this.form = {}
+          this.loadComments()
+        }else
+        {
+          this.$message.error(res.msg)
         }
       })
     }

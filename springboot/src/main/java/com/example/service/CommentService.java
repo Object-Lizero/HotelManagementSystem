@@ -90,9 +90,8 @@ public class CommentService {
 
     public List<Comment> selectByTypeId(Integer typeId) {
 
-        //所有的一级评论
+        //获得所有的一级评论
         List<Comment> list = commentMapper.selectByTypeIdAndParentId(typeId, 0);
-
 
         //获得一级评论的所有的回复
         for (Comment comment : list) {

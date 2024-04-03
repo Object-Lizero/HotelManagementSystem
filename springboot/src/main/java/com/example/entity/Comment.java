@@ -28,9 +28,12 @@ public class Comment implements Serializable {
     private String role;
     /** 用户姓名 */
     private String userName;
+
+    private String reply;
     /* 用户头像*/
     private String avatar;
-
+    //业务字段  孩子节点
+    private List<Comment> children;
     public String getAvatar() {
         return avatar;
     }
@@ -39,8 +42,7 @@ public class Comment implements Serializable {
         this.avatar = avatar;
     }
 
-    //业务字段  孩子节点
-    private List<Comment> children;
+
 
     public List<Comment> getChildren() {
         return children;
@@ -121,5 +123,13 @@ public class Comment implements Serializable {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public String getReply() {
+        return reply;
+    }
+
+    public void setReply(String reply) {
+        this.reply = reply;
     }
 }
