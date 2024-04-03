@@ -11,12 +11,6 @@
         </el-form-item>
         <el-form-item prop="role">
           <el-select v-model="form.role" placeholder="请选择角色" style="width: 100%">
-            <el-option
-                v-for="item in options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
-            </el-option>
             <el-option label="超级管理员" value = "ADMIN"></el-option>
             <el-option label="酒店管理员" value = "HOTEL"></el-option>
             <el-option label="用户" value = "USER"></el-option>
@@ -68,6 +62,7 @@ export default {
               localStorage.setItem("xm-user", JSON.stringify(res.data))  // 存储用户数据
               this.$message.success('登录成功')
               //this.$router.push('/')   //有时候路由跳转失败
+              //使用location.href   会刷新页面，路由跳转好用
               if(res.data.role === "USER"){
                 location.href = '/front/home'
               }else{
