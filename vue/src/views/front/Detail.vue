@@ -138,7 +138,7 @@
 
     <div style="font-weight: bold;font-size: 16px;margin-top: 30px; border-bottom: 1px solid #EEEEEE">评论信息</div>
     <!-- 评论区  -->
-    <div style="padding: 20px 50px;margin-bottom: 1000px">
+    <div style="padding: 20px 50px;margin-bottom: 50px">
       <!--一条评论-->
       <div style="margin: 15px 0" v-for="item in commentData">
         <el-row :gutter="20">
