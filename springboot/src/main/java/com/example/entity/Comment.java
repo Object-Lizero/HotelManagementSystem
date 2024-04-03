@@ -28,6 +28,26 @@ public class Comment implements Serializable {
     private String role;
     /** 用户姓名 */
     private String userName;
+    /* 酒店名字*/
+    private String hotelName;
+    /* 房间类型名字*/
+    private String typeName;
+
+    public String getHotelName() {
+        return hotelName;
+    }
+
+    public void setHotelName(String hotelName) {
+        this.hotelName = hotelName;
+    }
+
+    public String getTypeName() {
+        return typeName;
+    }
+
+    public void setTypeName(String typeName) {
+        this.typeName = typeName;
+    }
 
     private String reply;
     /* 用户头像*/

@@ -83,7 +83,16 @@ public class CommentService {
      */
     public PageInfo<Comment> selectPage(Comment comment, Integer pageNum, Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
+        //如果当前登录用户是酒店管理员，则查询当前酒店的评论   否则查询搜寻所有的评论
+        if (RoleEnum.HOTEL.name().equals(TokenUtils.getCurrentUser().getRole())){
+            comment.setHotelId(TokenUtils.getCurrentUser().getId());
+        }
+
         List<Comment> list = commentMapper.selectAll(comment);
+        for (Comment item : list) {
+            addAvatarAndUserName(item);
+
+        }
         return PageInfo.of(list);
     }
 

@@ -28,4 +28,7 @@ public interface HotelMapper {
 
     @Select("select * from hotel where name like concat('%',#{name},'%')")
     List<Hotel> selectByName(String name);
+
+    @Select("select * from hotel where name =#{username}")
+    Hotel selectByUserName(String username);
 }

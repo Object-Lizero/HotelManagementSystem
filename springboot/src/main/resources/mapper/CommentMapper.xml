@@ -17,9 +17,9 @@
             <if test="id != null"> and id= #{id}</if>
             <if test="content != null"> and content like concat('%', #{content}, '%')</if>
             <if test="time != null"> and time= #{time}</if>
-            <if test="typeId != null"> and type_id= #{typeId}</if>
-            <if test="hotelId != null"> and hotel_id= #{hotelId}</if>
-            <if test="userId != null"> and user_id= #{userId}</if>
+            <if test="typeId != null"> and comment.type_id= #{typeId}</if>
+            <if test="hotelId != null"> and comment.hotel_id= #{hotelId}</if>
+            <if test="userId != null"> and comment.user_id= #{userId}</if>
             <if test="parentId != null"> and parent_id= #{parentId}</if>
             <if test="role != null"> and role= #{role}</if>
         </where>
