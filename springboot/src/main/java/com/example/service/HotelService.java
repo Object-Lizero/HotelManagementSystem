@@ -111,8 +111,8 @@ public class HotelService {
         hotelMapper.updateById(dbHotel);
     }
 
-    public List<Hotel> selectAll() {
-        return hotelMapper.selectAll(new Hotel());
+    public List<Hotel> selectAll(Hotel hotel) {
+        return hotelMapper.selectAll(hotel);
     }
 
     public List<Hotel> selectByName(String name) {

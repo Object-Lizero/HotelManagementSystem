@@ -31,7 +31,7 @@
         <el-table-column prop="url" show-overflow-tooltip="true" label="官网"></el-table-column>
         <el-table-column prop="description" show-overflow-tooltip="true" label="介绍"></el-table-column>
         <el-table-column prop="role" label="角色"></el-table-column>
-        <el-table-column prop="status" label="状态"></el-table-column>
+        <el-table-column prop="status" label="审核状态"></el-table-column>
         <el-table-column label="操作" align="center" width="180">
           <template v-slot="scope">
             <el-button size="mini" type="primary" plain @click="handleEdit(scope.row)">编辑</el-button>
@@ -73,6 +73,13 @@
         </el-form-item>
         <el-form-item label="官网" prop="url">
           <el-input v-model="form.url" placeholder="官网"></el-input>
+        </el-form-item>
+        <el-form-item label="状态"  prop="status">
+          <el-select v-model="form.status" placeholder="审核状态" style="width: 100%">
+            <el-option label="待审核" value = "待审核"></el-option>
+            <el-option label="已通过" value = "已通过"></el-option>
+            <el-option label="未通过" value = "未通过"></el-option>
+          </el-select>
         </el-form-item>
         <el-form-item label="介绍" prop="description">
           <el-input type="textarea" v-model="form.description" placeholder="介绍"></el-input>

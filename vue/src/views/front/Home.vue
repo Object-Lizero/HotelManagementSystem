@@ -66,7 +66,7 @@ export default {
   methods: {
     loadHotels(){
       //调用后台查询所有酒店信息接口
-      this.$request.get('/hotel/selectAll').then(res=>{
+      this.$request.get("/hotel/selectAll?status=已通过").then(res=>{
         if(res.code === '200'){
           this.hotelData = res.data;
         }

@@ -37,8 +37,8 @@ public class HotelController {
      * 查询所有
      */
     @GetMapping("/selectAll")
-    public Result selectAll() {
-        List<Hotel> hotels = hotelService.selectAll();
+    public Result selectAll(Hotel hotel) {
+        List<Hotel> hotels = hotelService.selectAll(hotel);
         return Result.success(hotels);
     }
 
@@ -49,7 +49,7 @@ public class HotelController {
     public Result selectByName(@RequestParam String name) {
         List<Hotel> hotels = null;
         if (ObjectUtil.isNotEmpty(name) &&  "null".equals(name)) {
-            hotels = hotelService.selectAll();
+            hotels = hotelService.selectAll(new Hotel());
         } else {
             hotels = hotelService.selectByName(name);
         }
