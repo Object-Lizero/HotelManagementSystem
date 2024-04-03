@@ -135,9 +135,63 @@
         </div>
       </div>
     </div>
-    <div style="font-weight: bold;font-size: 16px;padding: 15px 30px;border-bottom: 1px solid #EEEEEE">评论信息</div>
-    <div></div>
-<!--    新增订单对话框-->
+
+    <div style="font-weight: bold;font-size: 16px;margin-top: 30px; border-bottom: 1px solid #EEEEEE">评论信息</div>
+    <!-- 评论区  -->
+    <div style="padding: 20px 50px;margin-bottom: 1000px">
+      <!--一条评论-->
+      <div style="margin: 15px 0">
+        <el-row :gutter="20">
+          <el-col :span="4">
+            <div style="display: flex; align-items: center">
+              <img src="@/assets/imgs/bg.jpg" alt="" style="width: 50px;height: 50px;border-radius: 50%">
+              <div style="flex:1;margin-left: 10px;color: #5E5C5CFF">张三</div>
+            </div>
+          </el-col>
+
+          <el-col :span="20">
+            <el-row :gutter="20">
+              <el-col :span="19">
+                <div style="height: 50px;line-height: 50px">dfadsf sadfwe放到安抚阿斯蒂芬</div>
+              </el-col>
+              <el-col :span="5">
+                <div style="height: 50px;line-height: 50px">2024-9-3 18:00:00</div>
+              </el-col>
+            </el-row>
+            <!--该评论的回复-->
+            <el-row :gutter="20" style="margin-top: 5px">
+              <el-col :span="5">
+                <div style="display: flex; align-items: center">
+                  <img src="@/assets/imgs/bg.jpg" alt="" style="width: 50px;height: 50px;border-radius: 50%">
+                  <div style="flex:1;margin-left: 10px;color: #5E5C5CFF">张三 <span style="font-weight: bold;">回复：</span> </div>
+                </div>
+              </el-col>
+              <el-col :span="14">
+                <div style="height: 50px;line-height: 50px">dfadsfsadfwe放到安抚阿斯蒂芬</div>
+              </el-col>
+              <el-col :span="5">
+                <div style="height: 50px;line-height: 50px">2024-9-3 18:00:00</div>
+              </el-col>
+            </el-row>
+            <!--回复评论输入框-->
+            <el-row :gutter="20" style="margin-top: 5px">
+              <el-col :span="20">
+                <el-input style="width: 70%"></el-input>
+                <el-button style="margin-left: 15px">回复</el-button>
+
+              </el-col>
+              <el-col :span="4">
+              </el-col>
+
+            </el-row>
+          </el-col>
+        </el-row>
+      </div>
+
+    </div>
+
+
+    <!--    新增订单对话框-->
     <div>
       <el-dialog title="请选择时间" :visible.sync="fromVisible" width="28%" :close-on-click-modal="false" destroy-on-close>
         <el-form label-width="100px" style="padding-right: 50px" >
@@ -172,6 +226,7 @@ export default {
       fromVisible: false,
       inTime: null,
       outTime: null,
+      commentData:[],
       pickerOptions: {
         //时间选择日期禁用处理
         disabledDate(time) {
@@ -190,11 +245,20 @@ export default {
   },
   mounted() {
     this.loadType()
+    this.loadComments()
   },
 
   // methods：本页面所有的点击事件或者其他函数定义区
   methods: {
-
+    loadComments(){
+      this.$request.get('/comment/selectByTypeId?id='+this.typeId).then(res=>{
+        if (res.code === '200'){
+            this.commentData = res.data
+        }else{
+          this.$message.error(res.msg)
+        }
+      })
+    },
     loadType() {
       this.$request.get('/type/selectById?id=' + this.typeId).then(res => {
         if (res.code === '200') {

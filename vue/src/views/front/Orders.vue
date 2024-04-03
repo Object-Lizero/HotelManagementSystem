@@ -14,7 +14,6 @@
         </el-table-column>
         <el-table-column prop="orderId" label="订单编号" show-overflow-tooltip></el-table-column>
         <el-table-column prop="userName" label="预定人" show-overflow-tooltip></el-table-column>
-<!--TODO 改成*先生/*女士   用户表增加性别        -->
         <el-table-column prop="hotelName" label="酒店"></el-table-column>
         <el-table-column prop="typeName" label="客房类型"></el-table-column>
         <el-table-column prop="time" label="预定时间" width="150"></el-table-column>
@@ -27,7 +26,7 @@
 
         <el-table-column label="操作" width="180" align="center">
           <template v-slot="scope">
-            <el-button plain type="primary" size="mini" @click="comment(scope.row.typeId)" v-if="scope.row.status === '已退房'">评价</el-button>
+            <el-button plain type="primary" size="mini" @click="comment(scope.row)" v-if="scope.row.status === '已退房'">评价</el-button>
             <el-button plain type="danger" size="mini" @click="del(scope.row.id)">删除</el-button>
           </template>
         </el-table-column>
@@ -48,9 +47,9 @@
     <!-- 评价弹窗-->
     <div>
       <el-dialog title="请输入评价" :visible.sync="fromVisible" width="45%" :close-on-click-modal="false" destroy-on-close>
-        <el-form label-width="100px" style="padding-right: 50px" >
+        <el-form label-width="100px" style="padding-right: 50px" v-model="form" >
           <el-form-item prop="content" label="评价内容">
-            <el-input type="textarea" v-model="content"></el-input>
+            <el-input type="textarea" v-model="form.content"></el-input>
           </el-form-item>
         </el-form>
 
@@ -70,12 +69,12 @@ export default {
   data() {
     return {
       user: JSON.parse(localStorage.getItem('xm-user') || '{}'),
-      tableData:{},
+      tableData:[],
       pageNum:1,
       pageSize:5,
       total:0,
-      content:null,
-      fromVisible:false
+      fromVisible:false,
+      form: {},
     }
   },
   mounted() {
@@ -97,7 +96,6 @@ export default {
         if(res.code === '200'){
           this.tableData = res.data?.list
           this.total = res.data?.total
-
         }else{
           this.$message.error(res.msg)
         }
@@ -122,11 +120,34 @@ export default {
     },
     /*保存评价信息*/
     save(){
+      if (!this.form.content) {
+        this.$message.warning('请输入评价内容')
+        return
+      }
+      let data = {
+        content : this.form.content,
+        typeId:this.form.typeId,
+        hotelId:this.form.hotelId,
+        userId:this.form.userId,
+        role:this.user.role,
+        parentId:0
 
+      }
+      this.$request.post('/comment/add',data).then(res=>{
+        if(res.code === '200'){
+          this.$message.success('评价成功')
+          this.form = {}
+          this.fromVisible = false
+        }else
+        {
+          this.$message.error(res.msg)
+        }
+      })
     },
     //打开评价弹窗
-    comment(typeId){
+    comment(row){
       this.fromVisible = true
+      this.form = row
     }
 
   }
