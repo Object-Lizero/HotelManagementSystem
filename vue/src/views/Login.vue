@@ -1,6 +1,7 @@
 <template>
   <div class="container">
-    <div style="width: 400px; padding: 30px; background-color: white; border-radius: 5px;">
+<!-- 用户登录   -->
+    <div style="width: 400px; padding: 30px; background-color: white; border-radius: 5px;  margin-left: 460px;">
       <div style="text-align: center; font-size: 20px; margin-bottom: 20px; color: #333">欢迎登录可馨酒店预定网</div>
       <el-form :model="form" :rules="rules" ref="formRef">
         <el-form-item prop="username">
@@ -11,9 +12,7 @@
         </el-form-item>
         <el-form-item prop="role">
           <el-select v-model="form.role" placeholder="请选择角色" style="width: 100%">
-            <el-option label="超级管理员" value = "ADMIN"></el-option>
-            <el-option label="酒店管理员" value = "HOTEL"></el-option>
-            <el-option label="用户" value = "USER"></el-option>
+            <el-option label="用户" value = "USER" onselect=""></el-option>
           </el-select>
         </el-form-item>
         <el-form-item>
@@ -21,7 +20,9 @@
         </el-form-item>
 
         <div style="display: flex; align-items: center">
-          <div style="flex: 1"></div>
+          <div style="flex: 1">
+            <span><a href="http://localhost:8080/loginForAdministrator">管理员登录</a></span>
+          </div>
           <div style="flex: 1; text-align: right">
             还没有账号？请 <a href="/register">注册</a>
           </div>
@@ -38,7 +39,9 @@ export default {
   name: "Login",
   data() {
     return {
-      form: { },
+      form: {
+        role:"USER"
+      },
       rules: {
         username: [
           { required: true, message: '请输入账号', trigger: 'blur' },
@@ -63,11 +66,7 @@ export default {
               this.$message.success('登录成功')
               //this.$router.push('/')   //有时候路由跳转失败
               //使用location.href   会刷新页面，路由跳转好用
-              if(res.data.role === "USER"){
                 location.href = '/front/home'
-              }else{
-                location.href = '/'
-              }
             } else {
               this.$message.error(res.msg)
             }
@@ -83,8 +82,9 @@ export default {
 .container {
   height: 100vh;
   overflow: hidden;
-  background-image: url("@/assets/imgs/bg.jpg");
-  background-size: 100%;
+  background-image: url("@/assets/imgs/user_login_bg.jpg");
+  background-size: 50%;
+  background-repeat: no-repeat;
   display: flex;
   align-items: center;
   justify-content: center;

@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 /**
  * @ClassName: Hotel
- * @Description: TODO(一句话描述该类的功能)
+ * @Description: 酒店管理员实体类
  * @DateTime: 2024/3/20
  **/
 public class Hotel extends Account implements Serializable {

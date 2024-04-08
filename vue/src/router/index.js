@@ -47,7 +47,8 @@ const routes = [
       { path: 'search', name: 'Search', meta: { name: '搜索页面' }, component: () => import('../views/front/Search') },
     ]
   },
-  { path: '/login', name: 'Login', meta: { name: '登录' }, component: () => import('../views/Login.vue') },
+  { path: '/login', name: 'Login', meta: { name: '用户登录' }, component: () => import('../views/Login.vue') },
+  { path: '/loginForAdministrator', name: 'LoginForAdministrator', meta: { name: '管理员登录' }, component: () => import('../views/LoginForAdministrator.vue') },
   { path: '/register', name: 'Register', meta: { name: '注册' }, component: () => import('../views/Register.vue') },
   { path: '*', name: 'NotFound', meta: { name: '无法访问' }, component: () => import('../views/404.vue') },
 ]
