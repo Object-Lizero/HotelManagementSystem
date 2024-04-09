@@ -2,7 +2,7 @@
   <div>
     <div class="search">
       <el-input placeholder="请输入房间编号" style="width: 200px" v-model="name"></el-input>
-      <el-button type="info" plain style="margin-left: 10px" @click="load(1)">查询</el-button>
+      <el-button type="info" plain style="margin-left: 10px" @click="search(1)">查询</el-button>
       <el-button type="warning" plain style="margin-left: 10px" @click="reset">重置</el-button>
     </div>
 
@@ -90,7 +90,7 @@ export default {
     }
   },
   created() {
-    this.load(1)
+    this.loadAll(1)
     //加载当前酒店的所有房型
     this.loadTypes()
   },
@@ -166,19 +166,23 @@ export default {
       }).catch(() => {
       })
     },
-    load(pageNum) {  // 分页查询
+    loadAll(pageNum) {  // 分页查询
       if (pageNum) this.pageNum = pageNum
+      let data = {
+        pageNum: this.pageNum,
+        pageSize: this.pageSize,
+        name : this.name
+      }
+      if (this.user.role === 'HOTEL'){
+        data.hotelId = this.user.id
+
+      }
       this.$request.get('/room/selectPage', {
-        params: {
-          pageNum: this.pageNum,
-          pageSize: this.pageSize,
-          name: this.name,
-        }
+        params: data
       }).then(res => {
         if(res.code === '200'){
           this.tableData = res.data?.list
           this.total = res.data?.total
-
         }else{
           this.$message.error(res.msg)
         }
